@@ -22,16 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "django-insecure-1761$0=*i!r8n9fhmoi(a6tf@zplh2@ejw7snatl9npbzb0ssp"
+SECRET_KEY = "django-insecure-1761$0=*i!r8n9fhmoi(a6tf@zplh2@ejw7snatl9npbzb0ssp"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-# ALLOWED_HOSTS = [
-#     'localhost',  # Allow localhost
-#     '127.0.0.1',  # Allow local IP
-#     'nasihat-ab617c06e45b.herokuapp.com',  # Allow your Heroku app's domain
-# ]
+ALLOWED_HOSTS = [
+    'localhost',  # Allow localhost
+    '127.0.0.1',  # Allow local IP
+    'nasihat-ab617c06e45b.herokuapp.com',  # Allow your Heroku app's domain
+]
+CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
 
 
 # Application definition
@@ -105,12 +106,12 @@ WSGI_APPLICATION = "nasihat.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 
@@ -200,9 +201,9 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_ROOT = 'static'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -213,25 +214,6 @@ import os
 from .settings import *
 from .settings import BASE_DIR as base_dir
 
-ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
-CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
-DEBUG = True
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(base_dir, 'staticfiles')
 
-connection_string = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
-parameters = {pair.split('=')[0]: pair.split('=')[1] for pair in connection_string.split(' ')}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': parameters['dbname'],
-        'HOST': parameters['host'],
-        'USER': parameters['user'],
-        'PASSWORD': parameters['password'],
-    }
-}
-
-SECRET_KEY = os.environ['SECRET']
