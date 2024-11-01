@@ -21,8 +21,8 @@ class Writer(models.Model):
     class Meta:
         unique_together = ('username', 'twitter')
         
-    def __str__(self) -> str:
-        return self.username
+    def __str__(self):
+        return self.username or "Unnamed Writer"
 
 class Hack(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
