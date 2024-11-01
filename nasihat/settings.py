@@ -59,12 +59,12 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware", 
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ["https://nasihat-ab617c06e45b.herokuapp.com", "https://50nasihat.vercel.app" , "http://192.168.43.218:3000", "https://40tavsiya.uz"]
+CORS_ALLOWED_ORIGINS = ["https://nasihat-ab617c06e45b.herokuapp.com", "https://50nasihat.vercel.app" , "http://192.168.43.218:3000", "http://192.168.166.190:3000", "https://40tavsiya.uz"]
 # CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOW_CREDENTIALS = True
 
