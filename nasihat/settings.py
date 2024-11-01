@@ -33,8 +33,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',  # Allow local IP
     'nasihat-ab617c06e45b.herokuapp.com',  # Allow your Heroku app's domain
 ]
-CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
-
+# CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
 
 # Application definition
 
@@ -116,10 +116,8 @@ WSGI_APPLICATION = "nasihat.wsgi.application"
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600
+    "default": dj_database_url.parse(
+        "postgresql://shukrullo:FORdoq6J4YgE3R1DkTxd2umL54KrG5If@dpg-csi6ukbgbbvc73fe6cmg-a.oregon-postgres.render.com/tavsiya"
     )
 }
 
