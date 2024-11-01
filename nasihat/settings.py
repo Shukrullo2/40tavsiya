@@ -31,7 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',  # Allow localhost
     '127.0.0.1',  # Allow local IP
-    'nasihat-ab617c06e45b.herokuapp.com',  # Allow your Heroku app's domain
+    'nasihat-ab617c06e45b.herokuapp.com', 
+    'four0tavsiya.onrender.com'
 ]
 # CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
 CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
