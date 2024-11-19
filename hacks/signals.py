@@ -11,7 +11,7 @@ from telegram.error import TimedOut, NetworkError, BadRequest
 @receiver(post_save, sender=Comment)
 @receiver(post_delete, sender=Comment)
 def update_hack_votes(sender, instance, **kwargs):
-    if instance.hack:
+    if hasattr(instance, 'hack') and instance.hack is not None:
         hack = instance.hack
         hack.countComments
     else:
@@ -21,7 +21,7 @@ def update_hack_votes(sender, instance, **kwargs):
 @receiver(post_save, sender=Reply)
 @receiver(post_delete, sender=Reply)
 def update_hack_votes(sender, instance, **kwargs):
-    if instance.comment:
+    if hasattr(instance, 'comment') and instance.comment is not None:
         comment = instance.comment
         comment.countReplies
     else:
