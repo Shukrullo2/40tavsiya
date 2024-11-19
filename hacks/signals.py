@@ -48,7 +48,7 @@ logger = logging.getLogger(__name__)
 async def send_message(sender, instance, created, **kwargs):
     bot = Bot(token=API_TOKEN)
     report_id = str(instance.hack.id)
-    text = f"Someone reported [this](http://127.0.0.1:8000/api/hack/{report_id}) hack"
+    text = f"Someone reported [this](https://40tavsiya.uz/hacks/{report_id}) hack"
     retry_attempts = 3
    
     for attempt in range(retry_attempts):
