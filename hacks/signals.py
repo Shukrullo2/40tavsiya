@@ -11,21 +11,29 @@ from telegram.error import TimedOut, NetworkError, BadRequest
 @receiver(post_save, sender=Comment)
 @receiver(post_delete, sender=Comment)
 def update_hack_votes(sender, instance, **kwargs):
-    if hasattr(instance, 'hack') and instance.hack is not None:
+    try:
+        # Ensure the related comment exists before proceeding
         hack = instance.hack
-        hack.countComments
-    else:
-        pass
+        if hack:
+            # Update the reply_count field manually
+            hack.reply_count = hack.countComments
+            hack.save()  # Save the updated reply_count field
+    except Hack.DoesNotExist:
+        pass  # Safely handle the case where the related comment does not exist
 
 
 @receiver(post_save, sender=Reply)
 @receiver(post_delete, sender=Reply)
 def update_hack_votes(sender, instance, **kwargs):
-    if hasattr(instance, 'comment') and instance.comment is not None:
+    try:
+        # Ensure the related comment exists before proceeding
         comment = instance.comment
-        comment.countReplies
-    else:
-        pass
+        if comment:
+            # Update the reply_count field manually
+            comment.reply_count = comment.countReplies
+            comment.save()  # Save the updated reply_count field
+    except Comment.DoesNotExist:
+        pass  # Safely handle the case where the related comment does not exist
 
     
 

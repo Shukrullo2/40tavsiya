@@ -45,10 +45,9 @@ class Hack(models.Model):
     @property
     def countComments(self):
         comments = self.comments.all()
-        comment_count = comments.count()
+        return comments.count()
 
-        self.comment_count = comment_count
-        self.save()
+        
 
     def __str__(self) -> str:
         return self.body[:20]
@@ -84,10 +83,9 @@ class Comment(models.Model):
     @property
     def countReplies(self):
         replies = self.replies.all()
-        reply_count = replies.count()
+        return replies.count()
 
-        self.reply_count = reply_count
-        self.save()
+        
 
     def __str__(self) -> str:
         return self.body[:20]
