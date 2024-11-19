@@ -11,14 +11,23 @@ from telegram.error import TimedOut, NetworkError, BadRequest
 @receiver(post_save, sender=Comment)
 @receiver(post_delete, sender=Comment)
 def update_hack_votes(sender, instance, **kwargs):
-    hack = instance.hack
-    hack.countComments
+    if instance.hack:
+        hack = instance.hack
+        hack.countComments
+    else:
+        pass
+
 
 @receiver(post_save, sender=Reply)
 @receiver(post_delete, sender=Reply)
 def update_hack_votes(sender, instance, **kwargs):
-    comment = instance.comment
-    comment.countReplies
+    if instance.comment:
+        comment = instance.comment
+        comment.countReplies
+    else:
+        pass
+
+    
 
 # def createWriter(sender, instance, created, **kwargs):
 #     if created:
