@@ -25,35 +25,34 @@ class Writer(models.Model):
         return self.username or "Unnamed Writer"
 
 class Hack(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, unique=True, 
-                          primary_key=True, editable=False)
     created = models.DateTimeField(auto_now_add=True)
-    writer = models.ForeignKey(Writer, on_delete=models.CASCADE, 
-                               null=True, blank=True, related_name="hack")
+    writer = models.ForeignKey(Writer, on_delete=models.CASCADE, null=True, blank=True, related_name="hack")
     body = models.TextField(max_length=500, null=True, blank=True)
     upvote = models.IntegerField(default=0, null=True, blank=True)
     downvote = models.IntegerField(default=0, null=True, blank=True)
     vote_net = models.IntegerField(default=0, null=True, blank=True)
     comment_count = models.IntegerField(default=0, null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            words = self.body.split()[:10]
+            self.id = '-'.join(words).lower()
+        super().save(*args, **kwargs)
+
     @property
     def getVotes(self):
         vote_net = self.upvote - self.downvotes
-        self.vote_net= vote_net
+        self.vote_net = vote_net
         self.save()
-    
+
     @property
     def countComments(self):
         comments = self.comments.all()
         return comments.count()
 
-        
-
     def __str__(self) -> str:
         return self.body[:20]
 
-
-    
 class Comment(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                           primary_key=True, editable=False)
