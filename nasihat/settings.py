@@ -28,12 +28,7 @@ SECRET_KEY = "django-insecure-1761$0=*i!r8n9fhmoi(a6tf@zplh2@ejw7snatl9npbzb0ssp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',  # Allow localhost
-    '127.0.0.1',  # Allow local IP
-    'nasihat-ab617c06e45b.herokuapp.com', 
-    'four0tavsiya.onrender.com'
-]
+ALLOWED_HOSTS = ["https://shukrullo.pythonanywhere.com/"]
 # CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
 CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
 
