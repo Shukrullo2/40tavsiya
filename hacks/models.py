@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+import re
 # Create your models here.
 
 class Writer(models.Model):
@@ -36,7 +37,8 @@ class Hack(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id and self.body:
-            words = self.body.split()[:10]
+            clean_text = re.sub(r'[^\w\s]', '', self.body)
+            words = clean_text.split()[:10]
             self.id = '-'.join(words).lower()
         super().save(*args, **kwargs)
 
