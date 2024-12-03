@@ -25,6 +25,7 @@ class Writer(models.Model):
         return self.username or "Unnamed Writer"
 
 class Hack(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey(Writer, on_delete=models.CASCADE, null=True, blank=True, related_name="hack")
     body = models.TextField(max_length=500, null=True, blank=True)
@@ -34,7 +35,7 @@ class Hack(models.Model):
     comment_count = models.IntegerField(default=0, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        if not self.id and self.body:
             words = self.body.split()[:10]
             self.id = '-'.join(words).lower()
         super().save(*args, **kwargs)
