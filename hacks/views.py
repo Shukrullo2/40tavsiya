@@ -85,19 +85,29 @@ def getReplies(request):
 @api_view(['POST'])
 def createHack(request):
     data = request.data 
-    if data.get('telegram'):
-        writer, created = Writer.objects.get_or_create(username=data['username'], telegram=data['telegram'])
-    elif data.get('twitter'):
-        writer, created = Writer.objects.get_or_create(username=data['username'], twitter=data['twitter']) 
+    
+    # Use filter() first to check for existing writers
+    existing_writers = Writer.objects.filter(username=data['username'])
+    
+    if existing_writers.exists():
+        # Get the first matching writer
+        writer = existing_writers.first()
+        # Optionally update telegram if provided
+        if data.get('telegram'):
+            writer.telegram = data['telegram']
+            writer.save()
     else:
-        writer, created = Writer.objects.get_or_create(username=data['username'])
+        # Create new writer if none exists
+        writer = Writer.objects.create(
+            username=data['username'],
+            telegram=data.get('telegram', '')  # Set telegram if provided, empty string if not
+        )
+    
     try:
         hack = Hack.objects.create(
-            body = data['body'],
-            writer = writer,
+            body=data['body'],
+            writer=writer,
         )
-
-        serializer = HackSerializer(hack, many=False)
         message = {'success': "true"}
         return Response(message)
     except:
@@ -108,18 +118,30 @@ def createHack(request):
 def createComment(request):
     data = request.data 
     hack = Hack.objects.get(id=data['hack_id'])
-    if data.get('twitter'):
-        writer, created = Writer.objects.get_or_create(username=data['username'], twitter=data['twitter'])
+    
+    # Use filter() first to check for existing writers
+    existing_writers = Writer.objects.filter(username=data['username'])
+    
+    if existing_writers.exists():
+        # Get the first matching writer
+        writer = existing_writers.first()
+        # Optionally update telegram if provided
+        if data.get('telegram'):
+            writer.telegram = data['telegram']
+            writer.save()
     else:
-        writer, created = Writer.objects.get_or_create(username=data['username'])
+        # Create new writer if none exists
+        writer = Writer.objects.create(
+            username=data['username'],
+            telegram=data.get('telegram', '')  # Set telegram if provided, empty string if not
+        )
+    
     try:
         comment = Comment.objects.create(
-            body = data['body'],
-            writer = writer,
-            hack = hack
+            body=data['body'],
+            writer=writer,
+            hack=hack
         )
-
-        serializer = HackSerializer(hack, many=False)
         message = {'success': "true"}
         return Response(message)
     except:
